@@ -2,8 +2,9 @@ package com.liugh.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liugh.annotation.CurrentUser;
 import com.liugh.annotation.ValidationParam;
 import com.liugh.base.PublicResultConstant;
@@ -40,11 +41,11 @@ public class NoticeController {
      * @throws Exception
      */
     @GetMapping("/infoList")
-    public ResponseModel<Page<Notice>> findInfoList(@CurrentUser User user, @RequestParam(name = "pageIndex", defaultValue = "1", required = false) Integer pageIndex,
-                                      @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer pageSize) throws Exception{
+    public ResponseModel<IPage<Notice>> findInfoList(@CurrentUser User user, @RequestParam(name = "pageIndex", defaultValue = "1", required = false) Integer pageIndex,
+                                                     @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer pageSize) throws Exception{
 
-        return ResponseHelper.buildResponseModel(noticeService.selectPage(new Page<>(pageIndex, pageSize),new EntityWrapper<Notice>().
-                eq("mobile",user.getMobile()).orderBy("create_time",false)));
+        return ResponseHelper.buildResponseModel(noticeService.page(new Page<>(pageIndex, pageSize), new QueryWrapper<Notice>().
+                eq("mobile",user.getMobile()).orderByDesc("create_time")));
     }
 
     /**
@@ -77,8 +78,8 @@ public class NoticeController {
      */
     @GetMapping("/noReadCount")
     public ResponseModel getNoRead(@CurrentUser User user) throws Exception{
-        return ResponseHelper.buildResponseModel(noticeService.selectList(new
-                EntityWrapper<Notice>().where("mobile = {0} and is_read = 0",user.getMobile())).size());
+        return ResponseHelper.buildResponseModel(noticeService.list(new
+                QueryWrapper<Notice>().eq("mobile",user.getMobile()).eq("is_read", 0)).size());
     }
 
 

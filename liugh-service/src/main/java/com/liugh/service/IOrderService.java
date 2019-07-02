@@ -1,7 +1,7 @@
 package com.liugh.service;
 
 import com.liugh.entity.Order;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.liugh.enums.OrderAction;
 import com.liugh.enums.OrderType;
 import com.liugh.model.OrderModel;

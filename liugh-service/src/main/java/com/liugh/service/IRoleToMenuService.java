@@ -1,6 +1,6 @@
 package com.liugh.service;
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.liugh.entity.RoleToMenu;
 
 import java.util.List;

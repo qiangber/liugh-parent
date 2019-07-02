@@ -1,9 +1,7 @@
 package com.liugh.shiro;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.liugh.base.Constant;
 import com.liugh.entity.Menu;
-import com.liugh.entity.Role;
 import com.liugh.entity.User;
 import com.liugh.entity.UserToRole;
 import com.liugh.exception.UnauthorizedException;
@@ -56,7 +54,7 @@ public class MyRealm extends AuthorizingRealm {
         }
 
         String userNo = JWTUtil.getUserNo(principals.toString());
-        User user = userService.selectById(userNo);
+        User user = userService.getById(userNo);
         UserToRole userToRole = userToRoleService.selectByUserNo(user.getUserNo());
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
@@ -97,7 +95,7 @@ public class MyRealm extends AuthorizingRealm {
         if (userNo == null) {
             throw new UnauthorizedException("token invalid");
         }
-        User userBean = userService.selectById(userNo);
+        User userBean = userService.getById(userNo);
         if (userBean == null) {
             throw new UnauthorizedException("User didn't existed!");
         }

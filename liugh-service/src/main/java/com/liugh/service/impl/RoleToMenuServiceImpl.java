@@ -1,14 +1,11 @@
 package com.liugh.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.liugh.base.Constant;
-import com.liugh.entity.Menu;
-import com.liugh.service.IRoleToMenuService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.liugh.entity.RoleToMenu;
 import com.liugh.mapper.RoleToMenuMapper;
+import com.liugh.service.IRoleToMenuService;
 import com.liugh.util.ComUtil;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,9 +26,9 @@ public class RoleToMenuServiceImpl extends ServiceImpl<RoleToMenuMapper, RoleToM
     //redis生成key注解，以类名方法名和参数组成key
 //    @Cacheable(value = "UserToRole",keyGenerator="wiselyKeyGenerator")
     public List<RoleToMenu> selectByRoleCode(String roleCode) {
-        EntityWrapper<RoleToMenu> ew = new EntityWrapper<>();
-        ew.where("role_code={0}", roleCode);
-        return this.selectList(ew);
+        QueryWrapper<RoleToMenu> ew = new QueryWrapper<>();
+        ew.eq("role_code", roleCode);
+        return this.list(ew);
     }
 
     @Override
@@ -42,15 +39,15 @@ public class RoleToMenuServiceImpl extends ServiceImpl<RoleToMenuMapper, RoleToM
             for (String menuCode : menuCodes) {
                 modelList.add(RoleToMenu.builder().roleCode(roleCode).menuCode(menuCode).build());
             }
-            result = this.insertBatch(modelList);
+            result = this.saveBatch(modelList);
         }
         return result;
     }
 
     @Override
     public boolean deleteAllByRoleCode(String roleCode) {
-        EntityWrapper<RoleToMenu> ew = new EntityWrapper<>();
-        ew.where("role_code={0}", roleCode);
-        return this.delete(ew);
+        QueryWrapper<RoleToMenu> ew = new QueryWrapper<>();
+        ew.eq("role_code", roleCode);
+        return this.remove(ew);
     }
 }

@@ -1,16 +1,14 @@
 package com.liugh.controller;
 
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.liugh.base.Constant;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liugh.base.PublicResultConstant;
 import com.liugh.config.ResponseHelper;
 import com.liugh.config.ResponseModel;
 import com.liugh.entity.Role;
 import com.liugh.model.RoleModel;
 import com.liugh.service.IRoleService;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,12 +35,12 @@ public class RoleController {
     @GetMapping("/pageList")
     //拥有超级管理员或管理员角色的用户可以访问这个接口,换成角色控制权限,改变请看MyRealm.class
     //@RequiresRoles(value = {Constant.RoleType.SYS_ASMIN_ROLE,Constant.RoleType.ADMIN},logical =  Logical.OR)
-    public ResponseModel<Page<Role>> getPageList(@RequestParam(name = "pageIndex", defaultValue = "1", required = false) Integer pageIndex,
-                                     @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer pageSize){
+    public ResponseModel<IPage<Role>> getPageList(@RequestParam(name = "pageIndex", defaultValue = "1", required = false) Integer pageIndex,
+                                                  @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer pageSize){
         //根据姓名查分页
 //        Page<Role> rolePage = roleService.selectPage(new Page<>(pageIndex, pageSize),
 //                new EntityWrapper<Role>().where("role_name like {0}","%"+name+"%"));
-        return ResponseHelper.buildResponseModel(roleService.selectPage(new Page<>(pageIndex, pageSize)));
+        return ResponseHelper.buildResponseModel(roleService.page(new Page<>(pageIndex, pageSize)));
     }
 
     /**
@@ -50,7 +48,7 @@ public class RoleController {
      */
     @GetMapping("/all")
     public  ResponseModel<List<Role>> getAllRole(){
-        return ResponseHelper.buildResponseModel(roleService.selectList(new EntityWrapper<Role>()));
+        return ResponseHelper.buildResponseModel(roleService.list());
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.liugh.mapper;
 
 import com.liugh.entity.UserThirdparty;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>

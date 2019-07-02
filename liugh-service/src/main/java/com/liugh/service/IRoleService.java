@@ -1,7 +1,7 @@
 package com.liugh.service;
 
 import com.liugh.entity.Role;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.liugh.model.RoleModel;
 
 import java.util.Map;

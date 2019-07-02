@@ -3,6 +3,8 @@ package com.liugh.config;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.unit.DataSize;
+import org.springframework.util.unit.DataUnit;
 
 import javax.servlet.MultipartConfigElement;
 
@@ -25,9 +27,9 @@ public class FileUploadConfig {
     public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
         // 单个文件最大
-        factory.setMaxFileSize("50Mb");
+        factory.setMaxFileSize(DataSize.of(50, DataUnit.MEGABYTES));
         // 设置总上传数据总大小
-        factory.setMaxRequestSize("100MB");
+        factory.setMaxRequestSize(DataSize.of(100, DataUnit.MEGABYTES));
         return factory.createMultipartConfig();
     }
 }

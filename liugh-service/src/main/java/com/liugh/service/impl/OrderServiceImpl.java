@@ -6,7 +6,7 @@ import com.liugh.enums.OrderType;
 import com.liugh.mapper.OrderMapper;
 import com.liugh.model.OrderModel;
 import com.liugh.service.IOrderService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.liugh.service.handler.OrderHandler;
 import org.springframework.stereotype.Service;
 

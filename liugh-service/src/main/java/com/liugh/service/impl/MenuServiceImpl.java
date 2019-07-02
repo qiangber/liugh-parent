@@ -1,11 +1,11 @@
 package com.liugh.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.liugh.base.Constant;
 import com.liugh.entity.Menu;
 import com.liugh.mapper.MenuMapper;
 import com.liugh.service.IMenuService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -31,9 +31,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     //redis方法级别的缓存，需要做缓存打开改注解即可
     @Cacheable(value = "UserToRole",keyGenerator="wiselyKeyGenerator")
     public List<Menu> selectByIds(List<Integer> permissionIds) {
-        EntityWrapper<Menu> ew = new EntityWrapper<>();
+        QueryWrapper<Menu> ew = new QueryWrapper<>();
         ew.in("menu_id", permissionIds);
-        return this.selectList(ew);
+        return this.list(ew);
     }
 
     @Override

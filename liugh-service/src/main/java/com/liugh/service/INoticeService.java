@@ -2,7 +2,7 @@ package com.liugh.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.liugh.entity.Notice;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.liugh.entity.User;
 
 /**
